@@ -1,13 +1,11 @@
-import './App.css'
+import { Outlet } from "react-router-dom";
 
-function App() {
+export default function App() {
   
-
   return (
     <>
-      Messeage!!
+      <h1>여긴 App</h1>
+      <Outlet />
     </>
   )
 }
-
-export default App

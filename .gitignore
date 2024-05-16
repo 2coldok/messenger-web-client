@@ -34,3 +34,12 @@ dist-ssr
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.vscode
+.yarn
+.eslintrc.cjs
+.yarnrc.yml
+.tsconfig.json
+.tsconfig.node.json
+vite.config.tsconfig
+yarn.lock
