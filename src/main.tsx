@@ -8,9 +8,11 @@ import GlobalStyle from './styles/GlobalStyle.ts'
 import TweetService from './service/TweetService.ts'
 import AllTweets from './pages/AllTweets.tsx'
 import MyTweets from './pages/MyTweets.tsx'
+import HttpClient from './network/HttpClient.ts'
 
 const baseURL = import.meta.env.VITE_BASE_URL;
-const tweetService = new TweetService(baseURL);
+const httpClient = new HttpClient(baseURL);
+const tweetService = new TweetService(httpClient);
 
 const router = createBrowserRouter([
   {

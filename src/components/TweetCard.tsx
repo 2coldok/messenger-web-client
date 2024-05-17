@@ -14,7 +14,7 @@ export default function TweetCard({ tweet, onUpdate, onDelete }: ITweetCardProps
   return (
     <>
       <h1>여긴 TweetCard.tsx</h1>
-      <h3>{tweet.username}</h3>
+      <h3>별명 : {tweet.username}</h3>
       <p>이름 : {tweet.name}</p>
       {/* <p>url : {tweet.url}</p> */}
       <p>내용 : {tweet.text}</p>
