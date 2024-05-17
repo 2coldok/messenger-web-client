@@ -21,26 +21,27 @@ class TweetService implements ITweetService {
   // username은 선택적 파라미터
   async getTweets(username?: string): Promise<ITweet[]> {
     const query = username ? `?username=${username}` : '';
-    return this.http.fetch(`/tweets${query}`, {
+    
+    return this.http.fetch<ITweet[]>(`/tweets${query}`, {
       method: 'GET',
     });
   }
 
   async postTweet(text: string): Promise<ITweet> {
-    return this.http.fetch(`/tweets`, {
+    return this.http.fetch<ITweet>(`/tweets`, {
       method: 'POST',
       body: JSON.stringify({ text, username: 'cat', name: 'Hyang'}),
     });
   }
 
   async deleteTweet(tweetId: string): Promise<void> {
-    this.http.fetch(`/tweets/${tweetId}`, {
+    this.http.fetch<void>(`/tweets/${tweetId}`, {
       method: 'DELETE',
     });
   }
 
-  async updateTweet(tweetId: string, text: string): Promise<ITweet>{
-    return this.http.fetch(`/tweets/${tweetId}`, {
+  async updateTweet(tweetId: string, text: string): Promise<ITweet> {
+    return this.http.fetch<ITweet>(`/tweets/${tweetId}`, {
       method: 'PUT',  
       body: JSON.stringify({ text })
     });
