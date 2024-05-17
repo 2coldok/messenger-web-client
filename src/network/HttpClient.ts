@@ -4,14 +4,14 @@ interface IOptions  {
   headers?: Record<string, string>;
 }
 
-class HttpClient {
-  baseURL: string;
+export interface IHttpClient {
+  fetch<T>(url: string, options: IOptions): Promise<T>;
+}
 
-  constructor(baseURL: string) {
-    this.baseURL = baseURL;
-  }
+class HttpClient implements IHttpClient {
+  constructor(private baseURL: string) {}
 
-  async fetch(url: string, options: IOptions) {
+  async fetch<T>(url: string, options: IOptions): Promise<T> {
     const response = await fetch(`${this.baseURL}${url}`, {
       ...options,
       headers: {
@@ -19,8 +19,8 @@ class HttpClient {
         ...options.headers
       }
     });
-
-    // body check
+    
+    // body check -> delete은 body 없으니 해당 요청에대한 처리 추가하기
     let data;
     try {
       data = await response.json();
@@ -29,14 +29,12 @@ class HttpClient {
     }
 
     if (response.status > 299 || response.status < 200) {
-      
       const message = data && data.message ? data.message : '모르는 오류';
       throw new Error(message);
     }
     
     return data;
   }
-
 }
 
 export default HttpClient;

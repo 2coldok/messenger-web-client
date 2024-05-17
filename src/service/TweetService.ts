@@ -1,11 +1,22 @@
-import { ITweet } from "../types/twitterTypes";
-import HttpClient from "../network/HttpClient";
-class TweetService {
-  http: HttpClient;
-  
-  constructor(http: HttpClient) {
-    this.http = http;
-  }
+import { IHttpClient } from "../network/HttpClient";
+
+export interface ITweet {
+  id: string;
+  text: string;
+  username: string;
+  name: string;
+  url?: string;
+}
+
+export interface ITweetService {
+  getTweets(username?: string): Promise<ITweet[]>;
+  postTweet(text: string): Promise<ITweet>;
+  deleteTweet(tweetId: string): Promise<void>;
+  updateTweet(tweetId: string, text: string): Promise<ITweet>;
+}
+
+class TweetService implements ITweetService {
+  constructor(private http: IHttpClient) {}
   
   // username은 선택적 파라미터
   async getTweets(username?: string): Promise<ITweet[]> {
