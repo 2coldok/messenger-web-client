@@ -54,7 +54,7 @@ export default function AllTweets({ tweetService }: ITweetServiceProp) {
   const onDelete = (tweetId: string) => {
     tweetService
       .deleteTweet(tweetId)
-      .then(() => setTweets((tweets) => tweets.filter((tweet) => tweet.id !== tweetId)))
+      .then(() => setTweets((tweets) => tweets.filter((tweet) => tweet.tweetId !== tweetId)))
       .catch((error) => onError(error))
   };
 
@@ -63,7 +63,7 @@ export default function AllTweets({ tweetService }: ITweetServiceProp) {
       .updateTweet(tweetId, text)
       .then((updated) =>
         setTweets((tweets) =>
-          tweets.map((item) => (item.id === updated.id ? updated : item))
+          tweets.map((item) => (item.tweetId === updated.tweetId ? updated : item))
         )
       )
       .catch((error) => error.toString());
@@ -80,7 +80,7 @@ export default function AllTweets({ tweetService }: ITweetServiceProp) {
       <h1>여긴 AllTweets.tsx</h1>
       <ul>
         {tweets.map((tweet) => (
-          <TweetList key={tweet.id}>
+          <TweetList key={tweet.userId}>
             <TweetCard tweet={tweet} onUpdate={onUpdate} onDelete={onDelete}  />
           </TweetList>
         ))}

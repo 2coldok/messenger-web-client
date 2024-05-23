@@ -9,6 +9,7 @@ import TweetService from './service/TweetService.ts'
 import AllTweets from './pages/AllTweets.tsx'
 import MyTweets from './pages/MyTweets.tsx'
 import HttpClient from './network/HttpClient.ts'
+import Login from './pages/Login.tsx'
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 const httpClient = new HttpClient(baseURL);
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { index: true, element: <AllTweets tweetService={tweetService}  /> },
-      { path: '/:username', element: <MyTweets tweetService={tweetService} /> }
+      { path: '/:username', element: <MyTweets tweetService={tweetService} /> },
+      { path: '/login', element: <Login /> }
     ],
   },
 ]);

@@ -1,11 +1,22 @@
 import { IHttpClient } from "../network/HttpClient";
 
+// export interface ITweet {
+//   id: string;
+//   text: string;
+//   username: string;
+//   name: string;
+//   url?: string;
+// }
+
 export interface ITweet {
-  id: string;
+  tweetId: string;
   text: string;
+  createdAt: string;
+  userId: string;
+
   username: string;
   name: string;
-  url?: string;
+  url: string;
 }
 
 export interface ITweetService {
