@@ -10,10 +10,14 @@ import AllTweets from './pages/AllTweets.tsx'
 import MyTweets from './pages/MyTweets.tsx'
 import HttpClient from './network/HttpClient.ts'
 import Login from './pages/Login.tsx'
+import TokenStorage from './db/token.ts'
+// import AuthService from './service/AuthService.ts'
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 const httpClient = new HttpClient(baseURL);
-const tweetService = new TweetService(httpClient);
+const tokenStorage = new TokenStorage();
+// const authService = new AuthService(httpClient, tokenStorage);
+const tweetService = new TweetService(httpClient, tokenStorage);
 
 const router = createBrowserRouter([
   {
