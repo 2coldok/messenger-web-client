@@ -1,17 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuth } from "../context/AuthContext";
 
-export default function Navbar() {
+export default function Header() {
+  const { user, logOut } = useAuth();
   const navigate = useNavigate();
+  
   const handleClick = (path: string) => {
     navigate(path);
   }
   
   return (
     <StyledContainer>
+      { user && <span>{user.username}님 로그인 상태 입니다</span>}
       <button className="home" onClick={() => handleClick('/')}>Home</button>
-      <button className="mytweet">My Tweet</button>
       <button className="login" onClick={() => handleClick('/login')}>Login</button>
+      { user && <button className="mytweet">My Tweet</button> }
+      <button onClick={logOut}>로그아웃</button>
     </StyledContainer>
   );
 }

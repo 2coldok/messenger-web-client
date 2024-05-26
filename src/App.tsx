@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "./pages/Navbar";
+import Header from "./components/Header";
 
 export default function App() {
   
   return (
     <>
-      <Navbar />
+      <Header />
       <h1>여긴 App</h1>
       <Outlet />
     </>

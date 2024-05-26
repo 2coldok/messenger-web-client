@@ -13,7 +13,7 @@ export default function EditTweetForm({ tweet, onUpdate, onClose }: IEditTweetFo
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onUpdate(tweet.id, text);
+    onUpdate(tweet.tweetId, text);
     onClose();
   };
 

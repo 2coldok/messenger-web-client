@@ -43,7 +43,7 @@ class TweetService implements ITweetService {
   async postTweet(text: string): Promise<ITweet> {
     return this.http.fetch<ITweet>(`/tweets`, {
       method: 'POST',
-      body: JSON.stringify({ text, username: 'cat', name: 'Hyang'}),
+      body: JSON.stringify({ text, userId: '1'}),
       headers: this.getHeaders(),
     });
   }

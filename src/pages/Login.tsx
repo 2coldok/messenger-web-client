@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+  const { signUp, logIn, user } = useAuth();
+  
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,6 +12,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [url, setURL] = useState('');
 
+  // error text
   // const [text, setText] = useState('');
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +35,12 @@ export default function Login() {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // if (signup) {
-      
-    // } else {
 
-    // }
-
+    if (signup) {
+      signUp(username, password, name, email, url)
+    } else {
+      logIn(username, password)
+    }
   }
   
   return (
@@ -89,4 +93,3 @@ const StyledContainer = styled.div`
     }
   }
 `;
-

@@ -11,12 +11,13 @@ import MyTweets from './pages/MyTweets.tsx'
 import HttpClient from './network/HttpClient.ts'
 import Login from './pages/Login.tsx'
 import TokenStorage from './db/token.ts'
-// import AuthService from './service/AuthService.ts'
+import { AuthProvider } from './context/AuthContext.jsx'
+import AuthService from './service/AuthService.ts'
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 const httpClient = new HttpClient(baseURL);
 const tokenStorage = new TokenStorage();
-// const authService = new AuthService(httpClient, tokenStorage);
+const authService = new AuthService(httpClient, tokenStorage);
 const tweetService = new TweetService(httpClient, tokenStorage);
 
 const router = createBrowserRouter([
@@ -33,7 +34,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <GlobalStyle />
-    <RouterProvider router={router} />
+    <AuthProvider authService={authService}>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )

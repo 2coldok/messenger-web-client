@@ -80,7 +80,7 @@ export default function AllTweets({ tweetService }: ITweetServiceProp) {
       <h1>여긴 AllTweets.tsx</h1>
       <ul>
         {tweets.map((tweet) => (
-          <TweetList key={tweet.userId}>
+          <TweetList key={tweet.tweetId}>
             <TweetCard tweet={tweet} onUpdate={onUpdate} onDelete={onDelete}  />
           </TweetList>
         ))}
