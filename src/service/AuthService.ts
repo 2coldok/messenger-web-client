@@ -6,17 +6,17 @@ interface IUserData {
   username: string;
 }
 
-interface IAuthService {
-  signup(username: string, password: string, name: string, email: string, url: string): Promise<IUserData>;
-  login(username: string, password: string): Promise<IUserData>;
+export interface IAuthService {
+  signUp(username: string, password: string, name: string, email: string, url: string): Promise<IUserData>;
+  logIn(username: string, password: string): Promise<IUserData>;
   me(): Promise<IUserData>;
-  logout(): void;
+  logOut(): void;
 }
 
 export default class AuthService implements IAuthService {
   constructor(private http: IHttpClient, private tokenStorage: ITokenStorage) {}
 
-  async signup(username: string, password: string, name: string, email: string, url: string) {
+  async signUp(username: string, password: string, name: string, email: string, url: string) {
     const data = await this.http.fetch<IUserData>('/auth/signup', {
       method: 'POST',
       body: JSON.stringify({
@@ -33,7 +33,7 @@ export default class AuthService implements IAuthService {
     return data;
   }
 
-  async login(username: string, password: string) {
+  async logIn(username: string, password: string) {
     const data = await this.http.fetch<IUserData>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
@@ -53,7 +53,8 @@ export default class AuthService implements IAuthService {
     });
   }
 
-  async logout() {
+  // 일단은 비동기적으로 구현
+  async logOut() {
     this.tokenStorage.clearToken();
   }
 }

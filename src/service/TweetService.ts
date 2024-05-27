@@ -48,8 +48,9 @@ class TweetService implements ITweetService {
     });
   }
 
+  // return 안하면 error catch 안됨
   async deleteTweet(tweetId: string): Promise<void> {
-    this.http.fetch<void>(`/tweets/${tweetId}`, {
+    await this.http.fetch<void>(`/tweets/${tweetId}`, {
       method: 'DELETE',
       headers: this.getHeaders(),
     });

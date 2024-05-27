@@ -55,7 +55,7 @@ export default function AllTweets({ tweetService }: ITweetServiceProp) {
     tweetService
       .deleteTweet(tweetId)
       .then(() => setTweets((tweets) => tweets.filter((tweet) => tweet.tweetId !== tweetId)))
-      .catch((error) => onError(error))
+      .catch((error) => error.toString());
   };
 
   const onUpdate = (tweetId: string, text: string) => {
@@ -64,8 +64,7 @@ export default function AllTweets({ tweetService }: ITweetServiceProp) {
       .then((updated) =>
         setTweets((tweets) =>
           tweets.map((item) => (item.tweetId === updated.tweetId ? updated : item))
-        )
-      )
+        ))
       .catch((error) => error.toString());
   }
 

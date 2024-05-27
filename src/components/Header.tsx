@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hook/AuthHook";
 
 export default function Header() {
   const { user, logOut } = useAuth();

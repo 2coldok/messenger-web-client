@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../hook/AuthHook";
 
 export default function Login() {
-  const { signUp, logIn, user } = useAuth();
+  const { signUp, logIn } = useAuth();
   
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState('');
