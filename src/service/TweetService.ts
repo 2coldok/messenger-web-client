@@ -30,7 +30,7 @@ export interface ITweetService {
 
 class TweetService implements ITweetService {
   constructor(private http: IHttpClient, private tokenStorage: ITokenStorage) {}
-  
+
   // username은 선택적 파라미터
   async getTweets(username?: string): Promise<ITweet[]> {
     const query = username ? `?username=${username}` : '';
@@ -40,10 +40,18 @@ class TweetService implements ITweetService {
     });
   }
 
+  // async postTweet(text: string): Promise<ITweet> {
+  //   return this.http.fetch<ITweet>(`/tweets`, {
+  //     method: 'POST',
+  //     body: JSON.stringify({ text, userId: '1'}),
+  //     headers: this.getHeaders(),
+  //   });
+  // }
+
   async postTweet(text: string): Promise<ITweet> {
     return this.http.fetch<ITweet>(`/tweets`, {
       method: 'POST',
-      body: JSON.stringify({ text, userId: '1'}),
+      body: JSON.stringify({ text }),
       headers: this.getHeaders(),
     });
   }

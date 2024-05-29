@@ -53,7 +53,7 @@ export default class AuthService implements IAuthService {
     });
   }
 
-  // 일단은 비동기적으로 구현
+  // 일단은 비동기적으로 구현(아직은 비동기 필요 없음)
   async logOut() {
     this.tokenStorage.clearToken();
   }

@@ -20,21 +20,18 @@ class HttpClient implements IHttpClient {
       }
     });
     
-    // body check -> delete은 body 없으니 해당 요청에대한 처리 추가하기
+    // body check : 현재 DELETE 요청시 서버에서 응답처리 안함. 
+    // body가 비어있어서 해당 요청에대한 처리 추가하기
+    // 비어있는 body를 파싱할 시 에러 발생됨(SyntaxError: Unexpected end of JSON input)
     let data;
-    
     try {
-      const text = await response.text();
-      data = text ? JSON.parse(text) : null;
-      // data = await response.json();
+      data = await response.json();
     } catch (error) {
-      console.error(error);
-      data = null;
+      console.log('body가 비어있음(DELETE 요청은 body가 비어있음)');
     }
 
     if (response.status > 299 || response.status < 200) {
-      const message = data && data.message ? data.message : '모르는 오류';
-      console.log('HttpClient.ts : status code 가 200번대가 아님');
+      const message = data && data.message ? data.message : '서버에서 message 처리하지 않은 오류';
       
       throw new Error(message); 
     }

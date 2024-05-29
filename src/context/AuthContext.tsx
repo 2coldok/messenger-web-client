@@ -39,13 +39,14 @@ export function AuthProvider({ authService, children }: IAuthProvider) {
   const signUp = useCallback(
     async (username: string, password: string, name: string, email: string, url: string) =>
       authService.signUp(username, password, name, email, url)
-      .then((user) => setUser(user)),
+      .then((user) => setUser(user))
+      .catch((error) => console.log(error)),
     [authService]  
   );
 
   const logIn = useCallback(
     async (username: string, password: string) =>
-      authService.logIn(username, password).then((user) => setUser(user)),
+      authService.logIn(username, password).then((user) => setUser(user)).catch((error) => console.log(error)),
     [authService]  
   );
 

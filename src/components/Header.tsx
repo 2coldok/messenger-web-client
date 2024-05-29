@@ -9,14 +9,14 @@ export default function Header() {
   const handleClick = (path: string) => {
     navigate(path);
   }
-  
+
   return (
     <StyledContainer>
       { user && <span>{user.username}님 로그인 상태 입니다</span>}
       <button className="home" onClick={() => handleClick('/')}>Home</button>
-      <button className="login" onClick={() => handleClick('/login')}>Login</button>
-      { user && <button className="mytweet">My Tweet</button> }
-      <button onClick={logOut}>로그아웃</button>
+      { !user && <button className="login" onClick={() => handleClick('/login')}>Login</button>}
+      { user && <button className="mytweet" onClick={() => navigate(`/${user.username}`)}>My Tweet</button> }
+      { user && <button onClick={logOut}>로그아웃</button> }
     </StyledContainer>
   );
 }
