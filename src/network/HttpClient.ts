@@ -1,3 +1,5 @@
+import { IAuthErrorEventBus } from "../context/AuthContext";
+
 interface IOptions  {
   method: string;
   body?: string;
@@ -9,7 +11,7 @@ export interface IHttpClient {
 }
 
 class HttpClient implements IHttpClient {
-  constructor(private baseURL: string) {}
+  constructor(private baseURL: string, private authErrorEventBus: IAuthErrorEventBus) {}
 
   async fetch<T>(url: string, options: IOptions): Promise<T> {
     const response = await fetch(`${this.baseURL}${url}`, {
@@ -32,8 +34,13 @@ class HttpClient implements IHttpClient {
 
     if (response.status > 299 || response.status < 200) {
       const message = data && data.message ? data.message : '서버에서 message 처리하지 않은 오류';
+      const error = new Error(message);
+
+      if (response.status === 401) {
+        this.authErrorEventBus.notify(error);
+      }
       
-      throw new Error(message); 
+      throw error;
     }
     
     return data;

@@ -20,7 +20,7 @@ export default function MyTweets({ tweetService }: IMyTweetsProp) {
         console.log(`MyTweets.tsx : error가 Error객체가 아님`); 
       }
     })
-  })
+  }, [tweetService, username]);
 
   return (
     <div>

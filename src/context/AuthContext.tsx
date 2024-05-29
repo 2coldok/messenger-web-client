@@ -7,6 +7,7 @@ import {
   useState
 } from 'react';
 import { IAuthService } from '../service/AuthService';
+import Login from '../pages/Login';
 
 interface IUser {
   token: string;
@@ -24,13 +25,21 @@ export interface IAuthContext {
 interface IAuthProvider {
   authService: IAuthService;
   children: ReactNode;
+  authErrorEventBus: IAuthErrorEventBus;
 }
 
 // To AuthHook.ts
 export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
-export function AuthProvider({ authService, children }: IAuthProvider) {
+export function AuthProvider({ authService, children, authErrorEventBus }: IAuthProvider) {
   const [user, setUser] = useState<IUser | undefined>(undefined);
+
+  useEffect(() => {
+    authErrorEventBus.listen((error: Error) => {
+      console.log(`인증 에러 + status 401 + authErrorEventBus callback 함수 발동 : ${error}`);
+      setUser(undefined);
+    })
+  }, [authErrorEventBus]);
 
   useEffect(() => {
     authService.me().then((user) => setUser(user)).catch(console.error);
@@ -68,9 +77,28 @@ export function AuthProvider({ authService, children }: IAuthProvider) {
 
   return (
     <AuthContext.Provider value={context}>
-      {children}
+      {user ? children : <Login />}
     </AuthContext.Provider>
   )
+}
+
+export type ErrorCallback = (error: Error) => void;
+export interface IAuthErrorEventBus {
+  listen(callback: ErrorCallback): void;
+  notify(error: Error): void;
+}
+export class AuthErrorEventBus implements IAuthErrorEventBus  {
+  #callback?: ErrorCallback;
+
+  listen(callback: ErrorCallback) {
+    this.#callback = callback;
+  }
+
+  notify(error: Error) {
+    if (this.#callback) {
+      this.#callback(error);
+    }
+  }
 }
 
 export default AuthContext;
